@@ -1,0 +1,111 @@
+1. 이진트리의 형태
+
+# 포화이진트리 (Full Binary Tree) - 모든 노드가 2개씩 꽉 참.
+# 완전이진트리 (Complete Binary Tree) - 왼쪽에서 오른쪽으로 꽉채워진 트리.
+
++ 완전이진트리를 사용하는 이유는?
+  완전이진트리는 배열처럼 순차적 데이터로 표현하기가 쉬움.
+  루트 = 1 인덱스  부터  왼 -> 오른으로 깊이 + 1 씩 배열에 넣으면
+
+  . 최고깊이의 최우측 값 = 배열의 마지막 인덱스
+  . 부모 인덱스  배열[n / 2]
+  . 자식 인덱스  배열[n * 2] 
+
+  와 같이 한방에 트리구조의 표현이 가능해짐.
+
+
+# 높이 균형 트리 (Height Balanced Tree)
+루트를 기준으로 왼쪽과 오른쪽의 깊이 차가 1 이상 나지 않는 트리
+
+# 완전 높이 균형 트리 (Completely Height Balanced Tree)
+루트를 기준으로 모든 트리의 깊이가 같은 트리
+대표적으로 AVL Tree 가 완전 높이 균형 트리를 유지한다.
+
+
+2. 순회 방법
+
+# 전위순회
+루트부터 왼쪽 아래방향 > 최 하위노드  > 옆 상위노드 > 하위노드
+
+       A
+    B     C
+  D   E  F   G
+
+A - B - D - E - C - F - G
+
+
+# 중위순회
+왼쪽 최하위 노드부터 세로기준 오른쪽으로 하나씩 이동
+
+       A
+    B     C
+  D   E  F   G
+
+D > B > E > A > F > C > G
+
+
+# 후위순회
+왼쪽 최하위 노드부터 > 형제노드 > 상위노드 > 형제노드 > 상위노드..로 이동
+
+       A
+    B     C
+  D   E  F   G
+
+ D > E > B > F > G > C > A
+
+
+- 사용예
+
+수식트리
+
+          +
+      *       -
+    1   2   7   8
+ 
+수식을 글로 표현 할 때 - 중위순회
+수식을 계산할 때 - 후위순회
+이진검색용 트리일때 정렬된 값 출력 - 중위순회
+트리의 모양을 그대로 출력 - 전위순회
+
+
+-- 과제 ----------------------------------------
+
+
+* 이진서치트리의 클래스 구현
+
+  삽입기준 - 작은값은 왼쪽, 큰값은 오른쪽 으로 삽입
+
+
+BSearchTree Tree;
+
+Tree.InsertNode(10);
+Tree.InsertNode(11);
+Tree.InsertNode(12);
+Tree.InsertNode(5);
+Tree.InsertNode(6);
+Tree.InsertNode(3);
+Tree.InsertNode(9);
+Tree.InsertNode(100);
+Tree.InsertNode(20);
+Tree.InsertNode(1);
+Tree.InsertNode(2);
+Tree.InsertNode(4);
+Tree.InsertNode(7);
+Tree.InsertNode(8);
+Tree.InsertNode(111);
+Tree.InsertNode(112);
+Tree.InsertNode(101);
+Tree.InsertNode(24);
+Tree.InsertNode(23);
+Tree.InsertNode(22);
+Tree.InsertNode(25);
+Tree.InsertNode(26);
+
+Tree.PreorderPrint();	// 전위순회 출력
+Tree.InorderPrint();	// 중위순회 출력
+Tree.PostorderPrint();	// 후위순회 출력
+
+삽입과 3가지 출력에 대한 구현.
+
+
+* 삭제는 다음시간에 학습

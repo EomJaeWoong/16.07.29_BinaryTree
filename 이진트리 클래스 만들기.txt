@@ -1,0 +1,69 @@
+이진트리용 클래스 만들기 // 추가 & 출력 까지만
+
+struct st_TNODE
+{
+	struct st_TNODE *pLeft;
+	struct st_TNODE *pRight;
+
+	int iData;
+};
+
+
+class BSearchTree
+{
+public:
+
+	BSearchTree();
+	~BSearchTree();
+
+	//------------------------------------------------------
+	// 새로운 데이터를 추가한다.
+	//------------------------------------------------------
+	bool		InsertNode(int iData);
+
+	//------------------------------------------------------
+	// 트리 전체 삭제
+	//------------------------------------------------------
+	bool		ReleaseTree(void);
+
+	//------------------------------------------------------
+	// 전위순회 방식 출력
+	//------------------------------------------------------
+	void		Print(st_TNODE *pNode = NULL, int iDepth = 0, int iLR = 0);
+
+
+private:
+
+	//------------------------------------------------------
+	// InsertNode 내부에서 호출되는 위치 찾아 추가 재귀 함수
+	//------------------------------------------------------
+	bool		linkNode(st_TNODE *pParent, st_TNODE *pChild);
+
+
+	//------------------------------------------------------
+	// releaseNode 내부에서 호출되는 노드삭제용 재귀함수
+	//------------------------------------------------------
+	void		releaseNode(st_TNODE *pNode);
+
+
+	st_TNODE	*m_pRoot;
+	int		m_iNodeCount;
+
+};
+
+
+
+// 메인 사용부 샘플 코드
+
+
+	BSearchTree Tree;
+
+	Tree.InsertNode(10);
+	Tree.InsertNode(11);
+	Tree.InsertNode(12);
+	Tree.InsertNode(5);
+	Tree.InsertNode(6);
+
+	Tree.PreorderPrint();
+	printf("10,11,12,5,6 Node Insert\n\n");
+	_getch();
