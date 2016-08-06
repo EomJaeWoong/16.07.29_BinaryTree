@@ -18,7 +18,7 @@ void main()
 
 	Tree.PreorderPrint();
 
-	Tree.deleteNode(6);
+	Tree.deleteNode(10);
 
 	Tree.PreorderPrint();
 	//printf("10,11,12,5,6 Node Insert\n\n");

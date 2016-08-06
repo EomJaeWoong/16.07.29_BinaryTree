@@ -36,7 +36,72 @@ bool BSearchTree::InsertNode(int iData)
 //------------------------------------------------------
 void BSearchTree::deleteNode(int iData)
 {
-	unlinkNode(m_pRoot, NULL, iData);
+	st_TNODE *pNode = m_pRoot;
+	st_TNODE *pParent = NULL, *pTargetNode = NULL;
+
+	//------------------------------------------------------
+	// 데이터 탐색
+	//------------------------------------------------------
+	while (pNode->iData != iData && pNode != NULL)
+	{
+		pParent = pNode;
+
+		if (pNode->iData > iData)		pNode = pNode->pLeft;
+		else							pNode = pNode->pRight;
+	}
+
+	//------------------------------------------------------
+	// 자식노드 없는 경우
+	//------------------------------------------------------
+	if (pNode->pLeft == NULL && pNode->pRight == NULL)
+	{
+		if (pNode == pParent->pLeft)
+			pParent->pLeft = NULL;
+		else
+			pParent->pRight = NULL;
+
+		delete pNode;
+	}
+
+	//------------------------------------------------------
+	// 자식노드가 하나인 경우
+	//------------------------------------------------------
+	else if (pNode->pLeft != NULL && pNode->pRight == NULL)
+	{
+		if (pNode == pParent->pLeft)
+			pParent->pLeft = pNode->pLeft;
+		else
+			pParent->pRight = pNode->pLeft;
+		delete pNode;
+	}
+
+	else if (pNode->pLeft == NULL && pNode->pRight != NULL)
+	{
+		if (pNode == pParent->pLeft)
+			pParent->pLeft = pNode->pRight;
+		else
+			pParent->pRight = pNode->pRight;
+		delete pNode;
+	}
+
+	//------------------------------------------------------
+	// 자식노드가 두개인 경우
+	//------------------------------------------------------
+	else
+	{
+		//------------------------------------------------------
+		// 삭제한 자리에 넣을놈 찾기
+		//  ->작은애중 가장 큰놈(L->R)       이걸로 만들기
+		//  ->큰애중 가장 작은놈(R->L)
+		// 찾은 데이터를 삭제할 위치에 대입시키고
+		// 찾은 위치를 실제로 삭제함
+		//------------------------------------------------------
+
+		pTargetNode = unlinkNode(pNode->pLeft, pNode);
+		pNode->iData = pTargetNode->iData;
+		delete pTargetNode;
+		//TargetNode -> NULL
+	}
 }
 
 //------------------------------------------------------
@@ -167,67 +232,11 @@ void BSearchTree::releaseNode(st_TNODE *pNode)
 //------------------------------------------------------
 // deleteNode 내부에서 호출되는 위치 찾아 삭제 재귀 함수
 //------------------------------------------------------
-bool BSearchTree::unlinkNode(st_TNODE *pNODE, st_TNODE *pParent, int iData)
+st_TNODE *BSearchTree::unlinkNode(st_TNODE *pNode, st_TNODE *pParent)
 {
-	if (pNODE == NULL)	return true;
+	if (pNode->pRight == NULL)		return pNode;
 
-	//------------------------------------------------------
-	// 데이터 탐색
-	//------------------------------------------------------
-	if (pNODE->iData > iData)
-		unlinkNode(pNODE->pLeft, pNODE, iData);
-	else if (pNODE->iData < iData)
-		unlinkNode(pNODE->pRight, pNODE, iData);
-
-	//------------------------------------------------------
-	// 자식노드 없음
-	//------------------------------------------------------
-	if (pNODE->pLeft == NULL && pNODE->pRight == NULL)
-	{
-		if (pParent->pLeft == pNODE)
-			pParent->pLeft = NULL;
-		else if (pParent->pRight == pNODE)
-			pParent->pRight = NULL;
-
-		delete pNODE;
-		return true;
-	}
-
-	//------------------------------------------------------
-	// 자식노드가 하나
-	//------------------------------------------------------
-	if (pNODE->pLeft != NULL && pNODE->pRight == NULL)
-	{
-		if (pParent->pLeft == pNODE)
-		{
-			pParent->pLeft = pNODE->pLeft;
-			delete pNODE;
-		}
-		else if(pParent->pRight == pNODE)
-		{
-			pParent->pRight = pNODE->pLeft;
-			delete pNODE;
-		}
-	}
-
-	else if (pNODE->pLeft == NULL && pNODE->pRight != NULL)
-	{
-		if (pParent->pLeft == pNODE)
-		{
-			pParent->pLeft = pNODE->pRight;
-			delete pNODE;
-		}
-		else if (pParent->pRight == pNODE)
-		{
-			pParent->pRight = pNODE->pRight;
-			delete pNODE;
-		}
-	}
-
-	//------------------------------------------------------
-	// 자식노드가 둘
-	//------------------------------------------------------
-	//else if (pNODE->pLeft == NULL && pNODE->pRight != NULL)
+	unlinkNode(pNode->pRight, pNode);
 }
 
 

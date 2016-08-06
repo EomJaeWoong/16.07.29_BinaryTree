@@ -62,7 +62,7 @@ private:
 	//------------------------------------------------------
 	// deleteNode 내부에서 호출되는 위치 찾아 삭제 재귀 함수
 	//------------------------------------------------------
-	bool		unlinkNode(st_TNODE *pNODE, st_TNODE *pParent, int iData);
+	st_TNODE	*unlinkNode(st_TNODE *pNode, st_TNODE *pParent);
 
 	//------------------------------------------------------
 	// releaseNode 내부에서 호출되는 노드삭제용 재귀함수
