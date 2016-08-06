@@ -234,9 +234,13 @@ void BSearchTree::releaseNode(st_TNODE *pNode)
 //------------------------------------------------------
 st_TNODE *BSearchTree::unlinkNode(st_TNODE *pNode, st_TNODE *pParent)
 {
-	if (pNode->pRight == NULL)		return pNode;
+	if (pNode->pRight == NULL)
+	{
+		pParent->pRight = NULL;
+		return pNode;
+	}
 
-	unlinkNode(pNode->pRight, pNode);
+	return unlinkNode(pNode->pRight, pNode);
 }
 
 
